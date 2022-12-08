@@ -48,7 +48,7 @@ namespace EventBus.Base.SubManagers
 
             if (_handlers[eventName].Any(s => s.HandlerType == type))
             {
-                throw new ArgumentException($"Handler Type {type.Name} alreadyy registered for '{eventName}'", nameof(type));
+                throw new ArgumentException($"Handler Type {type.Name} already registered for '{eventName}'", nameof(type));
             }
 
             _handlers[eventName].Add(SubscriptionInfo.Typed(type));
