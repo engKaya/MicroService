@@ -87,9 +87,12 @@ namespace EventBus.Base.SubManagers
                 RaiseOnEvenRemoved();
             }
         }
-
-        public event EventHandler<string> OnEventRemoved;
-
+         
+        private void RaiseOnEvenRemoved(string eventName)
+        {
+            var handler = OnEventRemoved;
+            handler?.Invoke(this, eventName);
+        }
 
         public string GetEventKey<T>()
         {
@@ -114,9 +117,6 @@ namespace EventBus.Base.SubManagers
 
         public bool HasSubscriptionsForEvent(string eventName) => _handlers.ContainsKey(eventName);
 
-        public Type GetEventTypeByName(string type)
-        { 
-
-        }
+        public Type GetEventTypeByName(string eventName) => _eventTypes.SingleOrDefault(x=>x.Name== eventName); 
     }
 }
