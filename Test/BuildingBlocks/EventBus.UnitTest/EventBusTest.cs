@@ -30,14 +30,14 @@ namespace EventBus.UnitTest
                     DefaultTopicName = "MicroserviceTopicName",
                     EventBusType = EventBusType.AzureServiceBus,
                     EventNameSuffix = "IntegrationEvent",
-                    EventBusConnectionString = "Endpoint = sb://ibrahimkaya.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=zyciGoPAgP3uoiXYQqKB39esZLp3Yg0i9QqputI8/mA="
+                    EventBusConnectionString = "Endpoint=sb://ibrahimkaya.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=zyciGoPAgP3uoiXYQqKB39esZLp3Yg0i9QqputI8/mA="
                 };
 
                 return EventBusFactory.CreateEventBus(conf, sp);
             });
 
             var provider = services.BuildServiceProvider();
-            var eventBus = provider.GetService<IEventBus>();
+            var eventBus = provider.GetRequiredService<IEventBus>();
 
             eventBus.Subscribe<OrderCreatedIntegrationEvent, OrderCreateIntegrationEventHandler>();
             eventBus.UnSubscribe<OrderCreatedIntegrationEvent, OrderCreateIntegrationEventHandler>();

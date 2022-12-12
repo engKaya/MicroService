@@ -29,7 +29,7 @@ namespace EventBus.AzureServiceBus
                 topicClient = new TopicClient(config.EventBusConnectionString, config.DefaultTopicName, RetryPolicy.Default);
             }
 
-            if (managementClient.TopicExistsAsync(config.DefaultTopicName).GetAwaiter().GetResult())
+            if (!managementClient.TopicExistsAsync(config.DefaultTopicName).GetAwaiter().GetResult())
             {
                 managementClient.CreateTopicAsync(config.DefaultTopicName).GetAwaiter().GetResult();
             }
