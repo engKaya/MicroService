@@ -3,8 +3,6 @@ using EventBus.Base.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EventBus.Base.SubManagers
 {
@@ -84,7 +82,7 @@ namespace EventBus.Base.SubManagers
                 {
                     _eventTypes.Remove(eventType);
                 }
-                RaiseOnEvenRemoved();
+                RaiseOnEvenRemoved(eventName);
             }
         }
          
