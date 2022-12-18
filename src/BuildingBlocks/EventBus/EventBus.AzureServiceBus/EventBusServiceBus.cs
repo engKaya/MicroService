@@ -143,7 +143,7 @@ namespace EventBus.AzureServiceBus
                 ruleExist = false;
             }
 
-            if (!ruleExist)
+            if (ruleExist)
             {
                 client.AddRuleAsync(new RuleDescription()
                 {

@@ -3,6 +3,7 @@ using EventBus.Base;
 using EventBus.Base.Abstraction;
 using EventBus.AzureServiceBus;
 using System;
+using EventBus.RabbitMQ;
 
 namespace EventBus.Factory
 {
@@ -13,7 +14,7 @@ namespace EventBus.Factory
             return config.EventBusType switch
             {
                 EventBusType.AzureServiceBus => new EventBusServiceBus(config, serviceProvider),
-                _ => throw new NotImplementedException(),
+                _ => new EventBusRabbitMQ(serviceProvider, config),
             };
 
         }

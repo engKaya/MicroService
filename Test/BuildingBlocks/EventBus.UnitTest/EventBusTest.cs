@@ -6,6 +6,8 @@ using EventBus.UnitTest.Events;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RabbitMQ.Client;
+using System;
 
 namespace EventBus.UnitTest
 {
@@ -41,7 +43,37 @@ namespace EventBus.UnitTest
 
             eventBus.Subscribe<OrderCreatedIntegrationEvent, OrderCreateIntegrationEventHandler>();
             eventBus.UnSubscribe<OrderCreatedIntegrationEvent, OrderCreateIntegrationEventHandler>();
+        }
 
+        [TestMethod]
+        public void subscribe_test_on_rabbitmq()
+        {
+            services.AddSingleton<IEventBus>(sp =>
+            {
+                EventBusConfig conf = new()
+                {
+                    ConnectionRetry = 5,
+                    SubscriberClientAppName = "EventBus.UnitTest",
+                    DefaultTopicName = "MicroserviceTopicName",
+                    EventBusType = EventBusType.RabbitMQ,
+                    EventNameSuffix = "IntegrationEvent",
+                    Connection = new ConnectionFactory()
+                    {
+                        HostName = "localhost",
+                        Port = 5672,
+                        UserName = "Microservice",
+                        Password = "Comrad1999",
+                        Uri = new Uri("amqp://localhost:5672")
+                    }
+                };
+                return EventBusFactory.CreateEventBus(conf, sp);
+            });
+
+            var provider = services.BuildServiceProvider();
+            var eventBus = provider.GetRequiredService<IEventBus>();
+
+            eventBus.Subscribe<OrderCreatedIntegrationEvent, OrderCreateIntegrationEventHandler>();
+            eventBus.UnSubscribe<OrderCreatedIntegrationEvent, OrderCreateIntegrationEventHandler>();
         }
     }
 }

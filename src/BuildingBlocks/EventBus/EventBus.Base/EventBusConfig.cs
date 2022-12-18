@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EventBus.Base
 {
-    public class EventBusConfig
+    public  class EventBusConfig
     {
         public int ConnectionRetry { get; set; } = 5;
         public string DefaultTopicName { get; set; } = "MicroserviceEventBus";
