@@ -1,0 +1,6 @@
+CatalogTypeName,CatalogBrandName,Description,Name,Price,PictureFileName,availableStock,onreorder
+T-Shirt,.Net,.Net Bot Black Hoodie and more,.NET Bot Black Hoodie,19.5,1.png,200,false
+Mug,.Net,.Net Black & White Mug,.Net Black & White Mug,8.5,2.png,56,true
+T-Shirt,Other,Prism White T-Shirt,Prism White T-Shirt,12.0,3.png,59,false
+T-Shirt,.Net,.Net Foundation T-Shirt,.Net Foundation T-Shirt,12,4.png,65,false
+USB Memory Stick,Other,Roslyn Red Sheet,Roslyn Red Sheet,8.50,5.png,22,False
