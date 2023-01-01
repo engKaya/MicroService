@@ -15,7 +15,7 @@ namespace CatalogService.Api.Extensions
             services.AddDbContext<CatalogContext>(options =>
             {
                 options.UseSqlServer(
-                    configuration["ConnectionStrings"],
+                    configuration["ConnectionString"],
                     sqlServerOptionsAction: sqlOptions =>
                     {
                         sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);

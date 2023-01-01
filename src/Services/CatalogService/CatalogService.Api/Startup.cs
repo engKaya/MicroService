@@ -4,7 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using CatalogService.Api.Extensions; 
+using CatalogService.Api.Extensions;
+using CatalogService.Api.Infastructure;
+
 namespace CatalogService.Api
 {
     public class Startup
@@ -26,6 +28,7 @@ namespace CatalogService.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CatalogService.Api", Version = "v1" });
             });
 
+            services.Configure<CatalogSettings>(Configuration.GetSection("CatalogSettings"));
             services.AddDbContext(Configuration);
         }
 

@@ -24,6 +24,8 @@ namespace CatalogService.Api
                         .SeedAsync(context, env, logger)
                         .Wait();
             });
+
+            hostBuilder.Run();
         }
 
         static IWebHost CreateHostBuilder(string[] args)
@@ -36,3 +38,4 @@ namespace CatalogService.Api
         }
     }
 }
+
