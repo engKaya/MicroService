@@ -34,11 +34,12 @@ namespace PaymentService.Api
             services.AddLogging(loggingBuilder =>
             {
                 loggingBuilder.AddConsole();
+                loggingBuilder.AddDebug();
             });
             services.AddTransient<OrderStartedIntegrationEventHandler>();
             services.AddSingleton<IEventBus>(sp =>
             {
-                EventBusConfig eventBusConfig = new EventBusConfig()
+                EventBusConfig eventBusConfig = new()
                 {
                     ConnectionRetry = 5,
                     EventNameSuffix = "IntegrationEvent",

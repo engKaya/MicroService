@@ -63,7 +63,8 @@ namespace EventBus.RabbitMQ
             var eventName = @event.GetType().Name;
             eventName = ProcessEventName(eventName);
 
-            consumerChannel.ExchangeDeclare(eventBusConfig.DefaultTopicName, "direct");
+            consumerChannel.ExchangeDeclare(eventBusConfig.DefaultTopicName, "direct"); 
+
             var message = JsonConvert.SerializeObject(@event);
             var body = Encoding.UTF8.GetBytes(message);
 
@@ -73,11 +74,16 @@ namespace EventBus.RabbitMQ
                 var properties = consumerChannel.CreateBasicProperties();
                 properties.DeliveryMode = 2; // persistent
 
-                consumerChannel.QueueDeclare(queue: GetSubName(eventName), 
-                    durable: true, 
-                    exclusive: false,
-                    autoDelete: false, 
-                    arguments: null);
+                //consumerChannel.QueueDeclare(queue: GetSubName(eventName), 
+                //    durable: true, 
+                //    exclusive: false,
+                //    autoDelete: false, 
+                //    arguments: null);
+                
+                //consumerChannel.QueueBind(
+                //    queue: GetSubName(eventName),
+                //    exchange: eventBusConfig.DefaultTopicName,
+                //    routingKey: eventName);
 
                 consumerChannel.BasicPublish(exchange: eventBusConfig.DefaultTopicName,
                                              routingKey: eventName,
@@ -148,7 +154,7 @@ namespace EventBus.RabbitMQ
             {
                 await ProcessEvent(eventName, message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {  
             }
             consumerChannel.BasicAck(e.DeliveryTag, multiple: false);
