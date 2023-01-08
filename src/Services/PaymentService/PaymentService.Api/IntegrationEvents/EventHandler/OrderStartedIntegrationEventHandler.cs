@@ -29,14 +29,15 @@ namespace PaymentService.Api.IntegrationEvents.EventHandler
 
             IntegrationEvent paymentEvent = paymentSuccessfullFlag
                     ? new OrderPaymentSuccessIntegrationEvent(@event.OrderId)
-                    : new OrderPaymentFailedIntegrationEvent(@event.OrderId);
+                    : new OrderPaymentFailedIntegrationEvent(@event.OrderId, "Error Message");
 
             logger.LogInformation($"OrderCreatedIntegrationEventHandler in PaymentService is fired with PaymentSuccess: {paymentSuccessfullFlag}, orderId {@event.OrderId}");
 
             //paymentEvent.CorrelationId = @event.CorrelationId;
             //Log.BindProperty("CorrelationId", @event.CorrelationId, false, out LogEventProperty y);
 
-
+            eventBus.Publish(paymentEvent);
+            return Task.CompletedTask;
         }
     }
 }
