@@ -16,7 +16,7 @@ namespace NotificationService.IntegrationEvents.EventHandlers
         {
 
             // Mail && SMS && Web Push Notification
-            logger.LogError($"Order payment failed! OrderId: {@event.OrderId.ToString()}. Error Message: {@event.ErrorMessage}");
+            logger.LogError($"Order payment failed! OrderId: {@event.OrderId)}. Error Message: {@event.ErrorMessage}");
             return Task.CompletedTask;
         }
     }
