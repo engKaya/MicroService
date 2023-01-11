@@ -1,17 +1,17 @@
-﻿using CatalogService.Api.Infastructure.Context;
+﻿using IdentityService.Api.Infastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Reflection;
+using System.Reflection; 
 
-namespace CatalogService.Api.Extensions
+namespace IdentityService.Api.Extensions
 {
     public static class DbContextRegistration
     {
         public static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<CatalogContext>(options =>
+            services.AddDbContext<IdentityContext>(options =>
             {
                 options.UseSqlServer(
                     configuration["ConnectionString"],
@@ -25,4 +25,4 @@ namespace CatalogService.Api.Extensions
             return services;
         }
     }
-}
+} 
