@@ -1,4 +1,0 @@
-﻿ibrahimsabitkaya@gmail.com;Test1234;İbrahim Sabit;KAYA
-jane.doe@microservice.com;Test1234;Jane;Doe
-john.doe@microservice.com;Test1234;John;Doe
-test.user@microservice.com;Test1234;Test Example;User
