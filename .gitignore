@@ -397,3 +397,7 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /src/Services/IdentityService/IdentityService.Api/Infastructure/Setup/SeedFiles/UsersSeed.txt
+/src/Services/IdentityService/IdentityService.Api/appsettings.json
+/src/Services/PaymentService/PaymentService.Api/appsettings.json
+/src/Services/OrderService/OrderService.Api/appsettings.json
+/src/Services/CatalogService/CatalogService.Api/appsettings.json

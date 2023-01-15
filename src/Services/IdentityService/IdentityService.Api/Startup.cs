@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting; 
 using IdentityService.Api.Extensions;
 using Microsoft.OpenApi.Models;
+using IdentityService.Api.Core.App.Services;
+using System.IO;
 
 namespace IdentityService.Api
 {
@@ -20,7 +22,8 @@ namespace IdentityService.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddScoped<IIdentityService, IdentityService.Api.Core.App.Services.IdentityService>();
+            services.AddConsul(Configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -49,6 +52,7 @@ namespace IdentityService.Api
             {
                 endpoints.MapControllers();
             });
+            app.RegisterConsul(Configuration);
         }
     }
 }

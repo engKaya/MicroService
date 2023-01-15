@@ -19,6 +19,9 @@ namespace IdentityService.Api.Infastructure.EntityConfigurations
             builder.Property(cb => cb.Email)
                 .IsRequired()
                 .HasMaxLength(100);
+            builder.Property(cb => cb.UserName)
+                .IsRequired()
+                .HasMaxLength(100);
             builder.Property(cb => cb.FirstName)
                 .IsRequired()
                 .HasMaxLength(100);

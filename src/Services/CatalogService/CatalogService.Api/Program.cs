@@ -31,7 +31,7 @@ namespace CatalogService.Api
         static IWebHost CreateHostBuilder(string[] args)
         {
             return WebHost.CreateDefaultBuilder(args)
-                   .UseStartup<Startup>()
+                   .UseStartup<Startup>() 
                    .UseWebRoot("Pics")
                    .UseContentRoot(Directory.GetCurrentDirectory())
                    .Build();                    

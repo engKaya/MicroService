@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PaymentService.Api.Extensions;
 using PaymentService.Api.IntegrationEvents.EventHandler;
 using PaymentService.Api.IntegrationEvents.Events;  
 namespace PaymentService.Api
@@ -24,7 +25,7 @@ namespace PaymentService.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddConsulConfig(Configuration); 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -70,8 +71,8 @@ namespace PaymentService.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
-
+            });  
+            app.UseConsul();
             IEventBus eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
             eventBus.Subscribe<OrderStartedIntegrationEvent, OrderStartedIntegrationEventHandler>();
         }

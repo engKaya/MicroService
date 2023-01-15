@@ -6,12 +6,17 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using CatalogService.Api.Extensions;
 using CatalogService.Api.Infastructure;
+using Consul;
+using Microsoft.AspNetCore.Hosting.Server.Features;
+using System.Linq;
+using System;
+using System.IO;
 
 namespace CatalogService.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration)    
         {
             Configuration = configuration;
         }
@@ -21,7 +26,7 @@ namespace CatalogService.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddConsul(Configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -52,6 +57,7 @@ namespace CatalogService.Api
             {
                 endpoints.MapControllers();
             });
+            app.RegisterConsul(Configuration);
         }
     }
 }

@@ -42,14 +42,15 @@ namespace IdentityService.Api.Infastructure.Context
             string fileName = Path.Combine(path, "UsersSeed.txt");
 
             var fileContent = File.ReadAllLines(fileName) 
-                    .Select(i => i.Split(';'))
+                    .Select(i => i.Split(','))
                     .Select(i =>
                     {
-                        var user = new User(i[1])
+                        var user = new User(i[2])
                         {
                             Email = i[0],
-                            FirstName = i[2],
-                            LastName = i[3]
+                            UserName = i[1],
+                            FirstName = i[3],
+                            LastName = i[4]
                         }; 
                         return user;
                     });
