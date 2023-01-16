@@ -401,3 +401,4 @@ FodyWeavers.xsd
 /src/Services/PaymentService/PaymentService.Api/appsettings.json
 /src/Services/OrderService/OrderService.Api/appsettings.json
 /src/Services/CatalogService/CatalogService.Api/appsettings.json
+/src/Services/BasketService/BasketService.Api/appsettings.json

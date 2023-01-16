@@ -68,7 +68,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus.UnitTest", "Test\BuildingBlocks\EventBus.UnitTest\EventBus.UnitTest.csproj", "{712FB576-B3FE-49DB-9D60-99EA4736FCC6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PaymetntService", "PaymetntService", "{7587A7D7-3775-4AB2-903D-536D2368FB09}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PaymentService", "PaymentService", "{7587A7D7-3775-4AB2-903D-536D2368FB09}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentService.Api", "src\Services\PaymentService\PaymentService.Api\PaymentService.Api.csproj", "{2E20EC11-848C-4D4F-B094-3A1A36DF3A31}"
 EndProject

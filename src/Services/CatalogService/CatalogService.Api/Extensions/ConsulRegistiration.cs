@@ -42,19 +42,18 @@ namespace CatalogService.Api.Extensions
 
             var registration = new AgentServiceRegistration()
             {
-                ID = $"{serviceName}_{uri.Host}:{uri.Port}",
+                ID = $"{serviceName}",
                 Name = serviceName,
-                Address = $"{uri.Scheme}://{uri.Host}",
+                Address = $"{uri.Host}",
                 Port = uri.Port,
                 Tags = new[] { $"urlprefix-/{serviceName}" },
                 //Check = new AgentServiceCheck()
                 //{
                 //    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5),
-                //    Interval = TimeSpan.FromSeconds(10),
+                //    Interval = TimeSpan.FromSeconds(5),
                 //    Method = "GET",
-                //    HTTP = $"{uri.Scheme}://{uri.Host}:{uri.Port}/api/health",
-                //    Timeout = TimeSpan.FromSeconds(5),
-                //    TLSSkipVerify = true
+                //    HTTP = $"{uri.Host}:{uri.Port}/api/health",
+                //    Timeout = TimeSpan.FromSeconds(5)
                 //}
             };
             consulClient.Agent.ServiceRegister(registration).Wait();

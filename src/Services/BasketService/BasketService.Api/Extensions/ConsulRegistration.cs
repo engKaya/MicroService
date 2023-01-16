@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 
-namespace IdentityService.Api.Extensions
+namespace BasketService.Api.Extensions
 {
     public static class ConsulRegistiration
     {
@@ -31,7 +31,7 @@ namespace IdentityService.Api.Extensions
             var consulClient = app.ApplicationServices.GetRequiredService<IConsulClient>();
             var lifetime = app.ApplicationServices.GetRequiredService<IApplicationLifetime>();
 
-            var serviceName =  configuration["CustomSettings:Consul:ServiceName"];
+            var serviceName = configuration["CustomSettings:Consul:ServiceName"];
 
             var features = app.Properties["server.Features"] as FeatureCollection;
             var addresses = features.Get<IServerAddressesFeature>();
@@ -46,6 +46,16 @@ namespace IdentityService.Api.Extensions
                 Address = $"{uri.Host}",
                 Port = uri.Port,
                 Tags = new[] { $"urlprefix-/{serviceName}", "JWT", "Auth" },
+                //Check = new AgentServiceCheck()
+                //{ 
+                //    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5),
+                //    Interval = TimeSpan.FromSeconds(5),
+                //    Method = "GET",
+                //    HTTP = $"{uri.Scheme}://{uri.Host}:{uri.Port}/health",
+                //    Timeout = TimeSpan.FromSeconds(25),
+                //    TLSSkipVerify = true,
+                //    Notes = $"Health Check to {uri.Scheme}://{uri.Host}:{uri.Port}/health With Get on every 10 seconds"
+                //}
             };
             consulClient.Agent.ServiceRegister(registration).Wait();
             lifetime.ApplicationStopping.Register(() =>

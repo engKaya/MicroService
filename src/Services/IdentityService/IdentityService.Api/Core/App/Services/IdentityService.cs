@@ -57,7 +57,7 @@ namespace IdentityService.Api.Core.App.Services
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
             var creeds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expire = System.DateTime.Now.AddSeconds(ExpiresValue);
+            var expire = System.DateTime.Now.AddDays(10);
             var token = new JwtSecurityToken(claims: claims, expires: expire, signingCredentials: creeds, notBefore: DateTime.Now);
             var encodedToken = new JwtSecurityTokenHandler().WriteToken(token);
             var response = new LoginResponseModel

@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 
-namespace IdentityService.Api.Extensions
+namespace Payment.Api.Extensions
 {
     public static class ConsulRegistiration
     {
@@ -46,6 +46,15 @@ namespace IdentityService.Api.Extensions
                 Address = $"{uri.Host}",
                 Port = uri.Port,
                 Tags = new[] { $"urlprefix-/{serviceName}", "JWT", "Auth" },
+                //Check = new AgentServiceCheck()
+                //{ 
+                //    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5),
+                //    Interval = TimeSpan.FromSeconds(5),
+                //    Method = "GET",
+                //    HTTP = $"{uri.Host}:{uri.Port}/health",
+                //    Timeout = TimeSpan.FromSeconds(25), 
+                //    Notes = $"Health Check to {uri.Scheme}://{uri.Host}:{uri.Port}/health With Get on every 10 seconds"
+                //}
             };
             consulClient.Agent.ServiceRegister(registration).Wait();
             lifetime.ApplicationStopping.Register(() =>

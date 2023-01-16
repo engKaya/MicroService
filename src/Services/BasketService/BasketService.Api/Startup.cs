@@ -1,16 +1,18 @@
+using BasketService.Api.Core.App.Repository;
+using BasketService.Api.Core.App.Services;
+using BasketService.Api.Extensions;
+using BasketService.Api.Infastructure.Repository;
+using BasketService.Api.IntegrationEvents.EventHandlers;
+using BasketService.Api.IntegrationEvents.Events;
+using EventBus.Base;
+using EventBus.Base.Abstraction;
+using EventBus.Factory;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BasketService.Api
 {
@@ -26,7 +28,7 @@ namespace BasketService.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            ConfigureServiceExtensions(services);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -46,14 +48,49 @@ namespace BasketService.Api
 
             app.UseHttpsRedirection();
 
-            app.UseRouting();
-
+            app.UseRouting(); 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            app.RegisterConsul(Configuration); 
         }
+
+
+        private void ConfigureServiceExtensions(IServiceCollection services)
+        {
+            services.ConfigureAuth(Configuration);
+            services.AddConsul(Configuration);
+            services.AddHttpContextAccessor();
+            services.AddSingleton(sp => sp.AddRedis(Configuration));
+            services.AddScoped<IBasketRepository, BasketRepository>(); 
+            services.AddTransient<IIdentityService, IdentityService>();
+            services.AddSingleton<IEventBus>(sp =>
+            {
+                EventBusConfig config = new EventBusConfig()
+                {
+                    ConnectionRetry = 5,
+                    SubscriberClientAppName = "BasketService",
+                    EventBusType = EventBusType.RabbitMQ,
+                    EventNameSuffix = "IntegrationEvent",
+                };
+
+                return EventBusFactory.CreateEventBus(config, sp);
+            });
+
+            SubscribeEvents(services);
+
+        }
+
+        private void SubscribeEvents(IServiceCollection services)
+        { 
+            var eventBus = services.BuildServiceProvider().GetRequiredService<IEventBus>();
+            eventBus.Subscribe<OrderCreatedIntegrationEvent, OrderCreatedIntegrationEventHandler>();
+        }
+
+        
     }
 }
