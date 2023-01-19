@@ -41,21 +41,21 @@ namespace BasketService.Api.Extensions
 
             var registration = new AgentServiceRegistration()
             {
-                ID = $"{serviceName}",
-                Name = serviceName,
+                ID = $"{serviceName}_{uri.Host}:{uri.Port}",
+                Name = $"{serviceName}",
                 Address = $"{uri.Host}",
                 Port = uri.Port,
-                Tags = new[] { $"urlprefix-/{serviceName}", "JWT", "Auth" },
-                //Check = new AgentServiceCheck()
-                //{ 
-                //    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5),
-                //    Interval = TimeSpan.FromSeconds(5),
-                //    Method = "GET",
-                //    HTTP = $"{uri.Scheme}://{uri.Host}:{uri.Port}/health",
-                //    Timeout = TimeSpan.FromSeconds(25),
-                //    TLSSkipVerify = true,
-                //    Notes = $"Health Check to {uri.Scheme}://{uri.Host}:{uri.Port}/health With Get on every 10 seconds"
-                //}
+                Tags = new[] { $"urlprefix-/{serviceName}", "Basket", "Redis" },
+                Check = new AgentServiceCheck()
+                { 
+                    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5),
+                    Interval = TimeSpan.FromSeconds(30),
+                    Method = "GET",
+                    HTTP = $"{uri.Scheme}://host.docker.internal:{uri.Port}/api/health",
+                    Timeout = TimeSpan.FromSeconds(120),
+                    TLSSkipVerify = true,
+                    Notes = $"Health Check to {uri.Scheme}://{uri.Host}:{uri.Port}/health With Get on every 10 seconds"
+                }
             };
             consulClient.Agent.ServiceRegister(registration).Wait();
             lifetime.ApplicationStopping.Register(() =>

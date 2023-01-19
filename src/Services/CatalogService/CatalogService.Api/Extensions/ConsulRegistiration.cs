@@ -42,19 +42,21 @@ namespace CatalogService.Api.Extensions
 
             var registration = new AgentServiceRegistration()
             {
-                ID = $"{serviceName}",
-                Name = serviceName,
+                ID = $"{serviceName}_{uri.Host}:{uri.Port}",
+                Name = $"{serviceName}",
                 Address = $"{uri.Host}",
                 Port = uri.Port,
                 Tags = new[] { $"urlprefix-/{serviceName}" },
-                //Check = new AgentServiceCheck()
-                //{
-                //    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5),
-                //    Interval = TimeSpan.FromSeconds(5),
-                //    Method = "GET",
-                //    HTTP = $"{uri.Host}:{uri.Port}/api/health",
-                //    Timeout = TimeSpan.FromSeconds(5)
-                //}
+                Check = new AgentServiceCheck()
+                {
+                    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5),
+                    Interval = TimeSpan.FromSeconds(30),
+                    Method = "GET",
+                    HTTP = $"{uri.Scheme}://host.docker.internal:{uri.Port}/api/health",
+                    Timeout = TimeSpan.FromSeconds(120),
+                    TLSSkipVerify = true,
+                    Notes = $"Health Check to {uri.Scheme}://{uri.Host}:{uri.Port}/health With Get on every 10 seconds"
+                }
             };
             consulClient.Agent.ServiceRegister(registration).Wait();
             lifetime.ApplicationStopping.Register(() =>
