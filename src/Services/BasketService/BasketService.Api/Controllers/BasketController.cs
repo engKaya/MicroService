@@ -3,6 +3,7 @@ using BasketService.Api.Core.App.Services;
 using BasketService.Api.Core.Domain.Models;
 using BasketService.Api.IntegrationEvents.Events;
 using EventBus.Base.Abstraction;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,7 +15,7 @@ namespace BasketService.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class BasketController : ControllerBase
     {
         private readonly IBasketRepository basketRepository;
@@ -38,8 +39,9 @@ namespace BasketService.Api.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(CustomerBasket), 200)]
-        public async Task<IActionResult> GetBasketById(string id)
+        public async Task<IActionResult> GetBasketById()
         {
+            var id = identityService.GetUserName();
             var basket = await basketRepository.GetBasketAsync(id);
             return Ok(basket ?? new CustomerBasket(id));
         }
@@ -116,6 +118,21 @@ namespace BasketService.Api.Controllers
 
             return Accepted();
         }
+        [HttpDelete]
+        [Route("DeleteBasket")]
+        [ProducesResponseType(typeof(CustomerBasket), 200)]
+        [ProducesResponseType(typeof(CustomerBasket), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> DeleteBasketAsync()
+        {
+            var id = identityService.GetUserName();
+            var deletedBasket = await basketRepository.DeleteBasketAsync(id);
+            if (!deletedBasket)
+                return BadRequest($"An error occured while deleting {id} basket!");
+
+            return Ok($"{id} basket has been removed!");
+        }
+
+        
         private string GetAssemblyName()
         {
             return GetType().Assembly.GetName().Name;

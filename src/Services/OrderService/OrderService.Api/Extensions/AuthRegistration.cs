@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace BasketService.Api.Extensions
+namespace OrderService.Api.Extensions
 {
     public static class AuthRegistration
     {
@@ -33,6 +33,6 @@ namespace BasketService.Api.Extensions
                 };
             });
             return services;
-        } 
+        }
     }
 }

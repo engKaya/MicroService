@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using OrderService.Api.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace OrderService.Api
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers(); 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OrderService.Api", Version = "v1" });
@@ -54,6 +55,14 @@ namespace OrderService.Api
             {
                 endpoints.MapControllers();
             });
+
+            app.RegisterConsul(Configuration);
+        }
+
+        private void ConfigureExtensions(IServiceCollection services)
+        {
+            services.ConfigureAuth(Configuration);
+            services.AddConsul(Configuration);
         }
     }
 }
