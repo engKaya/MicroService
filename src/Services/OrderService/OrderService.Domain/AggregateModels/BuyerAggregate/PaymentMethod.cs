@@ -1,11 +1,12 @@
 ﻿using OrderService.Domain.Exceptions;
+using OrderService.Domain.SeedWork;
 using System;
 
 namespace OrderService.Domain.AggregateModels.BuyerAggregate
 {
-    public class PaymentMethod
+    public class PaymentMethod : BaseEntity
     {
-        public Guid Id { get; set; }
+        public Guid BuyerId { get; set; }
         public string Alias { get; set; }
         public string CardNumber { get; set; }
         public string SecurityNumber { get; set; }

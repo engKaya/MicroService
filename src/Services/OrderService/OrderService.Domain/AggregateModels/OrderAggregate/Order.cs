@@ -14,6 +14,7 @@ namespace OrderService.Domain.AggregateModels.OrderAggregate
         public Guid? BuyerId { get; private set; }
         public Buyer Buyer { get; private set; }
         public Address Address { get; private set; }
+        private int _orderStatusId;
         public OrderStatus OrderStatus { get; private set; }
         private readonly List<OrderItem> _orderItems;
         public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
@@ -38,7 +39,7 @@ namespace OrderService.Domain.AggregateModels.OrderAggregate
         {
             BuyerId = buyerId;
             OrderDate = DateTime.UtcNow;
-            OrderStatus = OrderStatus.Submitted;
+            _orderStatusId = OrderStatus.Submitted.Id;
             Address = address;
 
             AddOrderStartedDomainEvent(UserName, cardTypeId, cardNumber, securityNumber, cardHolderName, cardExpiration);
