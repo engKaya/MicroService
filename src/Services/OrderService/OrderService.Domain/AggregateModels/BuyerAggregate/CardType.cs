@@ -29,7 +29,7 @@ namespace OrderService.Domain.AggregateModels.BuyerAggregate
         {
             var state = List().SingleOrDefault(s => s.Id == id);
 
-            return state ?? throw new OrderingDomainException($"Possible values for CardType: {string.Join(",", List().Select(s => s.Name))}");
+            return state ?? throw new OrderingDomainException($"Possible values for CardType: {string.Join(" - ", List().Select(s => s.Id.ToString()))}");
         }
     }
 }

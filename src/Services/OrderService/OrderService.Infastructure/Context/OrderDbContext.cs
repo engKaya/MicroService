@@ -44,7 +44,7 @@ namespace OrderService.Infastructure.Context
             modelBuilder.ApplyConfiguration(new PaymentMethodEntityConfiguration());
         }
 
-        public async Task<bool> IUnitOfWork.SaveChangesAsync(CancellationToken cancellation)
+        public async Task<bool> SaveChangesAsync(CancellationToken cancellation = default)
         {
             await mediator.DispatchDomainEventsAsync(this);
             await base.SaveChangesAsync(cancellation);

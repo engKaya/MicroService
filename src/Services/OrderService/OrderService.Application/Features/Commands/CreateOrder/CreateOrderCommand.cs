@@ -30,7 +30,9 @@ namespace OrderService.Application.Features.Commands.CreateOrder
             _orderItems = new List<OrderItemDTO>();
         }
 
-        public CreateOrderCommand(List<BasketItem> basketItems, string userName, string city, string street, string state, string country, string zipcode, string cardNumber, string cardHolderName, DateTime cardExpiration, string cardSecurityNumber, int cardTypeId) : this()
+        public CreateOrderCommand(
+            List<BasketItem> basketItems, 
+            string userName, string city, string street, string state, string country, string zipcode, string cardNumber, string cardHolderName, DateTime cardExpiration, string cardSecurityNumber, int cardTypeId) : this()
         {
             var DTOList = new List<OrderItemDTO>();
             foreach (var item in basketItems)

@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 
-namespace OrderService.Api.Extensions
+namespace OrderService.Api.Extensions.ServiceDiscovery
 {
     public static class ConsulRegistration
     {
@@ -45,7 +45,7 @@ namespace OrderService.Api.Extensions
                 Name = $"{serviceName}",
                 Address = $"{uri.Host}",
                 Port = uri.Port,
-                Tags = new[] { $"urlprefix-/{serviceName}", "Basket", "Redis" },
+                Tags = new[] { $"urlprefix-/{serviceName}", "OrderService", "Orders" },
                 Check = new AgentServiceCheck()
                 {
                     DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5),
@@ -54,7 +54,7 @@ namespace OrderService.Api.Extensions
                     HTTP = $"{uri.Scheme}://host.docker.internal:{uri.Port}/api/health",
                     Timeout = TimeSpan.FromSeconds(120),
                     TLSSkipVerify = true,
-                    Notes = $"Health Check to {uri.Scheme}://{uri.Host}:{uri.Port}/health With Get on every 10 seconds"
+                    Notes = $"Health Check to {uri.Scheme}://{uri.Host}:{uri.Port}/health With Get on every 30 seconds"
                 }
             };
             consulClient.Agent.ServiceRegister(registration).Wait();

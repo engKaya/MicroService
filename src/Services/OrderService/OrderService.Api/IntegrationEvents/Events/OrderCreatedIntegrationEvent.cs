@@ -1,8 +1,8 @@
-﻿using BasketService.Api.Core.Domain.Models;
-using EventBus.Base.Events;
+﻿using EventBus.Base.Events;
+using OrderService.Domain.Models;
 using System;
 
-namespace BasketService.Api.IntegrationEvents.Events
+namespace OrderService.Api.IntegrationEvents.Events
 {
     public class OrderCreatedIntegrationEvent : IntegrationEvent
     {
@@ -15,17 +15,17 @@ namespace BasketService.Api.IntegrationEvents.Events
         public string Country { get; set; }
         public string ZipCode { get; set; }
         public string CardNumber { get; set; }
-        public string CardHolderName{ get; set; }
-        public DateTime CardExpiration{ get; set; }
+        public string CardHolderName { get; set; }
+        public DateTime CardExpiration { get; set; }
         public string CardSecurityNumber { get; set; }
-        public int CardTypeId{ get; set; }
-        public string BuyerId{ get; set; }
-        public Guid RequsetId{ get; set; }
-        public CustomerBasket Basket{ get; }
+        public int CardTypeId { get; set; }
+        public string BuyerId { get; set; }
+        public Guid RequsetId { get; set; }
+        public CustomerBasket Basket { get; }
         public OrderCreatedIntegrationEvent(string userId, string userName, string city, string street, string state, string country, string zipCode, string cardNumber, string cardHolderName, DateTime cardExpiretaion, string cardSecurityNumber, int cardTypeId, string buyerId, CustomerBasket basket)
         {
             UserId = userId;
-            UserName = userName; 
+            UserName = userName;
             City = city;
             Street = street;
             State = state;
@@ -36,7 +36,7 @@ namespace BasketService.Api.IntegrationEvents.Events
             CardExpiretaion = cardExpiretaion;
             CardSecurityNumber = cardSecurityNumber;
             CardTypeId = cardTypeId;
-            BuyerId = buyerId; 
+            BuyerId = buyerId;
             Basket = basket;
         }
     }

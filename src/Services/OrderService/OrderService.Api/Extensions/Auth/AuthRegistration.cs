@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace OrderService.Api.Extensions
+namespace OrderService.Api.Extensions.Auth
 {
     public static class AuthRegistration
     {

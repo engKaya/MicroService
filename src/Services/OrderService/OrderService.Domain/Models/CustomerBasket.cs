@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace OrderService.Domain.Models
 {
-    internal class CustomerBasket
+    public class CustomerBasket
     {
+        public CustomerBasket()
+        {
+
+        }
+        public CustomerBasket(string id)
+        {
+            this.BuyerId = id;
+        }
+        public string BuyerId { get; set; }
+        public List<BasketItem> Items { get; set; } = new List<BasketItem>();
     }
 }
