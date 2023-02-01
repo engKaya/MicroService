@@ -22,7 +22,7 @@ namespace OrderService.Api.IntegrationEvents.Events
         public string BuyerId { get; set; }
         public Guid RequsetId { get; set; }
         public CustomerBasket Basket { get; }
-        public OrderCreatedIntegrationEvent(string userId, string userName, string city, string street, string state, string country, string zipCode, string cardNumber, string cardHolderName, DateTime cardExpiretaion, string cardSecurityNumber, int cardTypeId, string buyerId, CustomerBasket basket)
+        public OrderCreatedIntegrationEvent(string userId, string userName, string city, string street, string state, string country, string zipCode, string cardNumber, string cardHolderName, DateTime cardExpiration, string cardSecurityNumber, int cardTypeId, string buyerId, CustomerBasket basket)
         {
             UserId = userId;
             UserName = userName;
@@ -33,7 +33,7 @@ namespace OrderService.Api.IntegrationEvents.Events
             ZipCode = zipCode;
             CardNumber = cardNumber;
             CardHolderName = cardHolderName;
-            CardExpiretaion = cardExpiretaion;
+            CardExpiration = cardExpiration;
             CardSecurityNumber = cardSecurityNumber;
             CardTypeId = cardTypeId;
             BuyerId = buyerId;
