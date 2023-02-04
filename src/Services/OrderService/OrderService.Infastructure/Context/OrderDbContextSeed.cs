@@ -17,7 +17,7 @@ namespace OrderService.Infastructure.Context
 {
     public class OrderDbContextSeed
     {
-        public async Task SeedAsync(OrderDbContext orderDbContext, IWebHostEnvironment environment, ILogger<OrderDbContextSeed> logger)
+        public async Task SeedAsync(OrderDbContext orderDbContext, IWebHostEnvironment environment, ILogger<OrderDbContext> logger)
         {
             var policy = Policy.Handle<SqlException>()
                     .WaitAndRetryAsync(
@@ -42,7 +42,7 @@ namespace OrderService.Infastructure.Context
 
                 if (!orderDbContext.OrderStatuses.Any())
                 {
-                    orderDbContext.OrderStatuses.AddRange(customizationData ? GetOrderStatusesFromFile(setupDirPath) : GetPreDefinedOrderStatusesData());
+                    orderDbContext.OrderStatuses.AddRange(customizationData ? GetOrderStatusesFromFile(setupDirPath) : GetPreDefinedStatusData());
                 }
             });
         }

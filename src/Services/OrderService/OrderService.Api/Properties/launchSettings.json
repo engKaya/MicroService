@@ -19,8 +19,8 @@
     },
     "OrderService.Api": {
       "commandName": "Project",
-      "dotnetRunMessages": "true",
-      "launchBrowser": true,
+      //"dotnetRunMessages": "true",
+      //"launchBrowser": false,
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:5002",
       "environmentVariables": {

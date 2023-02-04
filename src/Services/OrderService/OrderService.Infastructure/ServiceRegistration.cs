@@ -4,12 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using OrderService.Application.Interfaces.Repositories;
 using OrderService.Infastructure.Context;
 using OrderService.Infastructure.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OrderService.Infastructure
 {
@@ -25,6 +19,9 @@ namespace OrderService.Infastructure
              
             services.AddScoped<IOrderRepository, OrderRepository>(); 
             services.AddScoped<IBuyerRepository, BuyerRepository>();
+
+            var optionsBuilder = new DbContextOptionsBuilder<OrderDbContext>()
+                                                .UseSqlServer(Configuration.GetConnectionString("OrderConnectionString"));
 
             using var dbContext = services.BuildServiceProvider().GetService<OrderDbContext>();
             dbContext.Database.EnsureCreated();

@@ -1,18 +1,21 @@
+using EventBus.Base;
+using EventBus.Base.Abstraction;
+using EventBus.Factory;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using OrderService.Api.Extensions.Auth;
+using OrderService.Api.Extensions.EventHandlerRegistration;
 using OrderService.Api.Extensions.ServiceDiscovery;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using OrderService.Api.IntegrationEvents.EventHandlers;
+using OrderService.Api.IntegrationEvents.Events;
+using OrderService.Application;
+using OrderService.Infastructure;
+using RabbitMQ.Client;
 
 namespace OrderService.Api
 {
@@ -34,6 +37,7 @@ namespace OrderService.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OrderService.Api", Version = "v1" });
             });
+            ConfigureExtensions(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,12 +62,38 @@ namespace OrderService.Api
             });
 
             app.RegisterConsul(Configuration);
+            ConfigureSubscriptionForEventBus(app);
         }
 
         private void ConfigureExtensions(IServiceCollection services)
         {
-            services.ConfigureAuth(Configuration);
-            services.AddConsul(Configuration);
+            services.AddLogging(conf => conf.AddConsole())
+                .ConfigureAuth(Configuration)
+                .AppRegistration()
+                .AddConsul(Configuration)
+                .AddInfrastructure(Configuration)
+                .AddEventHandlerRegistration();
+
+            services.AddSingleton(sp =>
+            {
+                EventBusConfig config = new()
+                {
+                    ConnectionRetry = 5,
+                    EventNameSuffix = "IntegrationEvent",
+                    SubscriberClientAppName = "OrderService",
+                    Connection = new ConnectionFactory(),
+                    EventBusType = EventBusType.RabbitMQ,
+
+                };
+
+                return EventBusFactory.CreateEventBus(config, sp);
+            });
+        }
+
+        private void ConfigureSubscriptionForEventBus(IApplicationBuilder app)
+        {
+            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+            eventBus.Subscribe<OrderCreatedIntegrationEvent, OrderCreatedIntegrationEventHandler>();
         }
     }
 }
