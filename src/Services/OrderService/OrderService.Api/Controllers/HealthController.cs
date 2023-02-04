@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
 namespace OrderService.Api.Controllers
 {
@@ -9,6 +10,7 @@ namespace OrderService.Api.Controllers
     public class HealthController : ControllerBase
     {
         [HttpGet]
+       [Route("api/health")]
         [AllowAnonymous]
         public IActionResult Get()
         {

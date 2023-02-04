@@ -8,9 +8,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using PaymentService.Api.Extensions;
+using Payment.Api.Extensions;
 using PaymentService.Api.IntegrationEvents.EventHandler;
-using PaymentService.Api.IntegrationEvents.Events;  
+using PaymentService.Api.IntegrationEvents.Events;
+using System;
+
 namespace PaymentService.Api
 {
     public class Startup
@@ -25,31 +27,12 @@ namespace PaymentService.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddConsulConfig(Configuration); 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PaymentService.Api", Version = "v1" });
             });
-
-            services.AddLogging(loggingBuilder =>
-            {
-                loggingBuilder.AddConsole();
-                loggingBuilder.AddDebug();
-            });
-            services.AddTransient<OrderStartedIntegrationEventHandler>();
-            services.AddSingleton<IEventBus>(sp =>
-            {
-                EventBusConfig eventBusConfig = new()
-                {
-                    ConnectionRetry = 5,
-                    EventNameSuffix = "IntegrationEvent",
-                    SubscriberClientAppName = "PaymentService", 
-                    EventBusType = EventBusType.RabbitMQ
-                };
-
-                return EventBusFactory.CreateEventBus(eventBusConfig, sp);
-            });
+            ConfigureCustomServices(services);
         }     
         
 
@@ -72,8 +55,37 @@ namespace PaymentService.Api
             {
                 endpoints.MapControllers();
             });  
-            app.UseConsul();
-            IEventBus eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+            app.RegisterConsul(Configuration); 
+            SubscriveEventHandlers(app);
+        }
+
+        private void ConfigureCustomServices(IServiceCollection services)
+        { 
+            services.AddConsul(Configuration);
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.AddConsole();
+                loggingBuilder.AddDebug();
+            });
+            services.AddTransient<OrderStartedIntegrationEventHandler>();
+            services.AddSingleton<IEventBus>(sp =>
+            {
+                EventBusConfig eventBusConfig = new()
+                {
+                    ConnectionRetry = 5,
+                    EventNameSuffix = "IntegrationEvent",
+                    SubscriberClientAppName = "PaymentService",
+                    EventBusType = EventBusType.RabbitMQ
+                };
+
+                return EventBusFactory.CreateEventBus(eventBusConfig, sp);
+            });
+            
+        }
+
+        private void SubscriveEventHandlers(IApplicationBuilder app)
+        {
+            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
             eventBus.Subscribe<OrderStartedIntegrationEvent, OrderStartedIntegrationEventHandler>();
         }
     }

@@ -17,8 +17,11 @@ namespace OrderService.Infastructure.Context
 {
     public class OrderDbContextSeed
     {
-        public async Task SeedAsync(OrderDbContext orderDbContext, IWebHostEnvironment environment, ILogger<OrderDbContext> logger)
+        public async Task SeedAsync(OrderDbContext orderDbContext, ILogger<OrderDbContext> logger)
         {
+
+            string rootPath = Directory.GetCurrentDirectory();
+            rootPath = rootPath.Replace("OrderService.Api", "OrderService.Infastructure");
             var policy = Policy.Handle<SqlException>()
                     .WaitAndRetryAsync(
                         retryCount: 5,
@@ -29,10 +32,10 @@ namespace OrderService.Infastructure.Context
                         }
                     );
 
-            var setupDirPath = Path.Combine(environment.ContentRootPath, "Infastructure", "Seeding", "Setup");
+            var setupDirPath = Path.Combine(rootPath, "Seeding", "Setup");
             await policy.ExecuteAsync(async () =>
             {
-                var customizationData = false;
+                var customizationData = true;
 
                 orderDbContext.Database.Migrate();
                 if (!orderDbContext.CardTypes.Any())

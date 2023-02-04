@@ -19,7 +19,7 @@ namespace OrderService.Infastructure.EntityConfiguration
             builder.HasKey(b => b.Id);
             builder.Property(b => b.Id).HasColumnName("Id").ValueGeneratedOnAdd();
             builder.Property(b => b.Alias).HasColumnName("Alias").HasMaxLength(200).IsRequired();
-            builder.Property<int>("BuyerId").IsRequired();
+            builder.Property<Guid>("BuyerId").IsRequired();
             builder.Property(x => x.CardHolderName)
                 .UsePropertyAccessMode(PropertyAccessMode.Field)
                 .HasColumnName("CardHolderName")

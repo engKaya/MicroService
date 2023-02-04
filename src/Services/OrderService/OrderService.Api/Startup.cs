@@ -81,9 +81,7 @@ namespace OrderService.Api
                     ConnectionRetry = 5,
                     EventNameSuffix = "IntegrationEvent",
                     SubscriberClientAppName = "OrderService",
-                    Connection = new ConnectionFactory(),
                     EventBusType = EventBusType.RabbitMQ,
-
                 };
 
                 return EventBusFactory.CreateEventBus(config, sp);

@@ -30,8 +30,11 @@ namespace OrderService.Api
                 var env = services.GetService<IWebHostEnvironment>();
 
                 var dbContextSeeder = new OrderDbContextSeed();
-                dbContextSeeder.SeedAsync(context, env, logger).Wait();
-            }); 
+                dbContextSeeder.SeedAsync(context, logger).Wait();
+                context.SaveChangesAsync().Wait();
+            });
+
+            host.Run();
         }
 
         static IWebHost BuildWebHost(IConfiguration config, string[] args) =>
