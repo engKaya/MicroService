@@ -15,7 +15,6 @@ using OrderService.Api.IntegrationEvents.EventHandlers;
 using OrderService.Api.IntegrationEvents.Events;
 using OrderService.Application;
 using OrderService.Infastructure;
-using RabbitMQ.Client;
 
 namespace OrderService.Api
 {
@@ -54,6 +53,7 @@ namespace OrderService.Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

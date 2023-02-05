@@ -1,5 +1,5 @@
-﻿using BasketService.Api.IntegrationEvents.Events;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using OrderService.Api.IntegrationEvents.EventHandlers;
 
 namespace OrderService.Api.Extensions.EventHandlerRegistration
 {
@@ -7,7 +7,7 @@ namespace OrderService.Api.Extensions.EventHandlerRegistration
     {
         public static IServiceCollection AddEventHandlerRegistration(this IServiceCollection services)
         {
-            services.AddTransient<OrderCreatedIntegrationEvent>();
+            services.AddTransient<OrderCreatedIntegrationEventHandler>();
             return services;
         }
     }

@@ -1,17 +1,15 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using OrderService.Domain.AggregateModels.BuyerAggregate;
 using OrderService.Domain.AggregateModels.OrderAggregate;
 using OrderService.Domain.SeedWork;
-using Polly;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Polly;
 
 namespace OrderService.Infastructure.Context
 {

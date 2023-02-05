@@ -9,25 +9,23 @@ using System.Threading.Tasks;
 
 namespace OrderService.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/{action}")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class OrderController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public OrderController(IMediator mediator, IHttpContextAccessor httpContextAccessor)
+        public OrderController(IMediator mediator)
         {
             _mediator = mediator;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
-        [Route("{id}")]
-        public async Task<IActionResult> GetOrderDetailsById(Guid id)
+        [ActionName("GetOrderDetailsById")]
+        public async Task<IActionResult> GetOrderDetailsById()
         {
-            var res = await _mediator.Send(new GetOrderDetailsQuery(id));
+            var res = await _mediator.Send(new GetOrderDetailsQuery(new Guid()));
             return Ok(res);
         }
     }

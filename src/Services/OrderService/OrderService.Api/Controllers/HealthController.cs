@@ -10,7 +10,6 @@ namespace OrderService.Api.Controllers
     public class HealthController : ControllerBase
     {
         [HttpGet]
-       [Route("api/health")]
         [AllowAnonymous]
         public IActionResult Get()
         {

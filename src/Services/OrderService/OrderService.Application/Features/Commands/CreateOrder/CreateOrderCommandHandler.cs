@@ -1,13 +1,9 @@
 ﻿using EventBus.Base.Abstraction;
 using MediatR;
-using Microsoft.Azure.Amqp.Framing;
 using OrderService.Application.IntegrationEvents;
 using OrderService.Application.Interfaces.Repositories;
 using OrderService.Domain.AggregateModels.OrderAggregate;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Address = OrderService.Domain.AggregateModels.OrderAggregate.Address;
