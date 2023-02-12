@@ -1,0 +1,4 @@
+﻿ibrahimsabitkaya@gmail.com,ibrahimkaya123,test123123,İbrahim Sabit,Kaya
+john.doe@test.com,john.doe,jd123123!,John,Doe
+jane.doe@test.com,jane.doe,jd321321!,Jane,Doe
+test.user@test.com,test.user,tu123123!,Test,User

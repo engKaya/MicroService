@@ -42,10 +42,10 @@ namespace WebApp.Application.Services.Services
             throw new System.NotImplementedException();
         }
 
-        public Task Logout()
-        {
-            httpClient.PostAsync
-        }
+        //public Task Logout()
+        //{
+        //    //httpClient.PostAsync
+        //}
 
         public Task Register(string username, string password, string email)
         {
