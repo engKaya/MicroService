@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/enviroment/enviroment';
 import { PaginatedViewModel } from 'src/app/common-objects/PaginatedViewModel.model';
 import { CatalogItem } from '../objects/entities/CatalogItem.model';
+import { BasketItem } from '../objects/models/BasketItem.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,5 +30,11 @@ export class DashboardComponent {
       console.log(this.products);
       this.ref.detectChanges();
     });
+  }
+
+  addToCart(item: CatalogItem) {
+
+    var basketItem = new BasketItem(item);
+    this.catalogService.addToCart(basketItem);
   }
 }

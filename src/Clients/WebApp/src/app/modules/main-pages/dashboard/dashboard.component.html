@@ -1,8 +1,8 @@
 <style>
- body {
-  padding: 0;
-  margin: 0;
-}
+  body {
+    padding: 0;
+    margin: 0;
+  }
 </style>
 
 <div class="row">
@@ -18,18 +18,38 @@
       </div>
     </div>
   </div>
-</div>  
+</div>
 <div *ngIf="!(IsItemsLoading | async)">
-  <div class="card-group row g-0">
-    <div class="card m-4 d-flex justify-content-center align-items-center" *ngFor="let item of products.Data" style="width: 18rem; border: .5px rgb(170, 170, 170) solid; border-radius: 10px;">
-        <div class="d-flex justify-content-center align-items-center" style="max-width:100px; max-height: 300px;"> 
-            <img src="{{picture_url + item.PictureFileName}}" class="card-img-top" alt="...">
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">{{item.Name}}</h5>
-          <p class="card-text">{{item.Description}}</p>
-          <a href="#" class="btn btn-primary pull-left">Go somewhere</a>
-        </div>
+  <div class="row" style="margin-left: auto">
+    <div class="card m-4 col-sm-12 col-md-4 col-lg-3 col-xlg-2" *ngFor="let item of products.Data" style="width: 18rem; border: 0.5px rgb(170, 170, 170) solid; border-radius: 10px;">
+      <div style="max-width: 100px; max-height: 300px">
+        <img
+          src="{{ picture_url + item.PictureFileName }}"
+          class="card-img-top"
+          alt=""
+        />
       </div>
+      <div class="card-body">
+        <h5 class="card-title">
+          {{ item.Name }} &nbsp; {{ item.CatalogBrand.Brand }}
+        </h5>
+        <p class="card-text">{{ item.Description }}</p>
+      </div>
+      <button 
+        *ngIf="item.AvailableStock > 0"
+        mat-raised-button
+        color="primary" 
+        (click)="addToCart(item)"
+        matBadgePosition="before"
+        matBadgeColor="accent"
+      >
+        {{'GENERAL.ADD_TO_CART' | translate}}
+      </button>
+      <div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">{{ item.Price | currency : "TRY" }}</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>

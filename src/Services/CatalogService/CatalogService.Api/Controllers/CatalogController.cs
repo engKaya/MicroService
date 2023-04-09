@@ -51,6 +51,8 @@ namespace CatalogService.Api.Controllers
             var totalItems = await _catalogContext.CatalogItems.LongCountAsync();
             var itemsOnPage = await _catalogContext.CatalogItems
                     .OrderBy(x => x.Name)
+                    .Include(x=>x.CatalogType)
+                    .Include(x=>x.CatalogBrand)
                     .Skip(pageSize * pageIndex)
                     .Take(pageSize)
                     .ToListAsync();

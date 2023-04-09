@@ -34,6 +34,9 @@ namespace EventBus.RabbitMQ
             }
             else
                 connectionFactory = new ConnectionFactory();
+
+            connectionFactory.UserName = eventBusConfig.UserName;
+            connectionFactory.Password = eventBusConfig.Password;
             
             connection = new RabbitMQPersistenConnection(connectionFactory);
             this.consumerChannel = CreateConsumerChannel();

@@ -10,6 +10,8 @@ import { AngularMaterialModule } from './common-modules/angular-material.module'
 import { I18nModule } from './common-modules/i18n.module'; 
 import { MainPagesModule } from './modules/main-pages/main-pages.module';
 import { AuthModule } from './modules/auth/auth.module'; 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './interceptors/httpinterceptor.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +29,11 @@ import { AuthModule } from './modules/auth/auth.module';
     AuthModule
   ],
   providers: [  
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   

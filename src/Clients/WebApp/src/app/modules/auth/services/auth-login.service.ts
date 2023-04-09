@@ -97,4 +97,8 @@ export class AuthLoginService {
   getUserName(): string {
     return this.localStorage.getUsername();
   }
+
+  getToken(): string {
+    return this.localStorage.GetToken();
+  }
 }

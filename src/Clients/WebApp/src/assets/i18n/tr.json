@@ -1,26 +1,26 @@
 {
-   "GENERAL" : {
-     "HOME" : "Ana Sayfa",
-     "LOADING" : "Lütfen Bekleyiniz..."
-   },
-   "AUTH":{
-      "LOGIN":"Giriş Yap",
-      "LOGOUT":"Çıkış Yap",
-      "REGISTER":"Kayıt Ol",
-      "USERNAME":"Kullanıcı Adı",
-      "USERNAME_REQUIRED":"Kullanıcı Adı Gerekli",
-      "PASSWORD":"Şifre",
-      "PASSWORD_REQUIRED":"Şifre Gerekli",
-      "EMAIL":"E-Posta",
-      "REMEMBER_ME":"Beni Hatırla",
-      "FORM_ERRORS":"Form Hatalarını Düzeltin"
-   },
-   "ERROR_CODES":{
-     "LOGIN":{
-       "200": "Giriş Başarılı",
-       "401": "Kullanıcı Adı veya Şifre Hatalı",
-       "404": "Kullanıcı Adı veya Şifre Hatalı"
-     }
-   }
-  
+  "GENERAL": {
+    "HOME": "Ana Sayfa",
+    "LOADING": "Lütfen Bekleyiniz...",
+    "ADD_TO_CART": "Sepete Ekle"
+  },
+  "AUTH": {
+    "LOGIN": "Giriş Yap",
+    "LOGOUT": "Çıkış Yap",
+    "REGISTER": "Kayıt Ol",
+    "USERNAME": "Kullanıcı Adı",
+    "USERNAME_REQUIRED": "Kullanıcı Adı Gerekli",
+    "PASSWORD": "Şifre",
+    "PASSWORD_REQUIRED": "Şifre Gerekli",
+    "EMAIL": "E-Posta",
+    "REMEMBER_ME": "Beni Hatırla",
+    "FORM_ERRORS": "Form Hatalarını Düzeltin"
+  },
+  "ERROR_CODES": {
+    "LOGIN": {
+      "200": "Giriş Başarılı",
+      "401": "Kullanıcı Adı veya Şifre Hatalı",
+      "404": "Kullanıcı Adı veya Şifre Hatalı"
+    }
+  }
 }

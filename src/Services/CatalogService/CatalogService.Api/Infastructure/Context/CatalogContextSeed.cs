@@ -25,7 +25,7 @@ namespace CatalogService.Api.Infastructure.Context
                         {
                             logger.LogError(exception, $"Exception {exception.Message} occured on attempt {retry} of {ctx.PolicyKey}.");
                         }
-                    );
+                    ); 
 
             var setupDirPath = Path.Combine(environment.ContentRootPath, "Infastructure", "Setup", "SeedFiles");
             var picturePath = "Pics";

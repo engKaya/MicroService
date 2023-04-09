@@ -76,6 +76,7 @@ namespace BasketService.Api
                     SubscriberClientAppName = "BasketService",
                     EventBusType = EventBusType.RabbitMQ,
                     EventNameSuffix = "IntegrationEvent",
+                    
                 };
 
                 return EventBusFactory.CreateEventBus(config, sp);

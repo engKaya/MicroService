@@ -8,42 +8,53 @@ import {
   of,
   throwError,
 } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators'; 
+import { retry, catchError } from 'rxjs/operators';
 import { environment } from 'src/enviroment/enviroment';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { PaginatedViewModel } from 'src/app/common-objects/PaginatedViewModel.model';
 import { CatalogItem } from '../objects/entities/CatalogItem.model';
+import { BasketItem } from '../objects/models/BasketItem.model';
 
 @Injectable({
   providedIn: 'root',
 })
-
-
 export class CatalogService {
+  IsLoadingSubject: BehaviorSubject<boolean>;
+  IsLoading$: Observable<boolean>;
+  API_URL = environment.api_gateway;
+  constructor(
+    private http: HttpClient,
+    private localStorage: LocalStorageService
+  ) {
+    this.IsLoadingSubject = new BehaviorSubject<boolean>(false);
+    this.IsLoading$ = this.IsLoadingSubject.asObservable();
+  }
 
-    IsLoadingSubject: BehaviorSubject<boolean>;
-    IsLoading$: Observable<boolean>;
-    API_URL = environment.api_gateway;
-    constructor(
-        private http: HttpClient,
-        private localStorage: LocalStorageService
-    ) { 
-        this.IsLoadingSubject = new BehaviorSubject<boolean>(false);
-        this.IsLoading$ = this.IsLoadingSubject.asObservable();        
-    }
+  getItems(): Promise<PaginatedViewModel<CatalogItem>> {
+    this.IsLoadingSubject.next(true);
+    let url = `${this.API_URL}api/catalog/items`;
+    return lastValueFrom(this.http.get<PaginatedViewModel<CatalogItem>>(url))
+      .finally(() => {
+        this.IsLoadingSubject.next(false);
+      })
+      .catch((error) => {
+        if (environment.isDevMode) this.handleError(error);
+        return error;
+      });
+  }
 
-    getItems(): Promise<PaginatedViewModel<CatalogItem>>{
-        this.IsLoadingSubject.next(true);
-        let url = `${this.API_URL}api/catalog/items`;
-        return lastValueFrom(this.http.get<PaginatedViewModel<CatalogItem>>(url)).finally(() => {
-            this.IsLoadingSubject.next(false);
-        }).catch((error) => {
-            if (environment.isDevMode) this.handleError(error);
-            return error;
-          });
-    }
-
-    
+  addToCart(item: BasketItem) {
+    this.IsLoadingSubject.next(true);
+    let url = `${this.API_URL}basket/AddItem`;
+    return lastValueFrom(this.http.post(url, item))
+      .finally(() => {
+        this.IsLoadingSubject.next(false);
+      })
+      .catch((error) => {
+        if (environment.isDevMode) this.handleError(error);
+        return error;
+      });
+  }
 
   handleError(error: any) {
     let errorMessage = '';

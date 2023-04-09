@@ -1,7 +1,8 @@
 {
     "GENERAL" : {
       "HOME" : "Home",
-      "LOADING" : "Loading..."
+      "LOADING" : "Loading...",
+      "ADD_TO_CART" : "Add to Cart"
     },
     "AUTH":{
        "LOGIN":"Login",
