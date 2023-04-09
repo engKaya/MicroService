@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using System.Linq;
 using System;
 using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.FileProviders;
 
 namespace CatalogService.Api
 {
@@ -27,7 +29,8 @@ namespace CatalogService.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddConsul(Configuration);
-            services.AddControllers();
+
+            services.AddControllers().AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CatalogService.Api", Version = "v1" });
@@ -52,7 +55,12 @@ namespace CatalogService.Api
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+          Path.Combine(Directory.GetCurrentDirectory(), @"Pics")),
+                RequestPath = new PathString("/Pics")
+            });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

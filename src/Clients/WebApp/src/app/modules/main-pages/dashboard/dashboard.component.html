@@ -1,0 +1,35 @@
+<style>
+ body {
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="row">
+  <div *ngIf="IsItemsLoading | async">
+    <div class="col-md-12">
+      <div>
+        <div class="card-body">
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary" role="status"></div>
+          </div>
+          &nbsp;&nbsp;<span [translate]="'GENERAL.LOADING'"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  
+<div *ngIf="!(IsItemsLoading | async)">
+  <div class="card-group row g-0">
+    <div class="card m-4 d-flex justify-content-center align-items-center" *ngFor="let item of products.Data" style="width: 18rem; border: .5px rgb(170, 170, 170) solid; border-radius: 10px;">
+        <div class="d-flex justify-content-center align-items-center" style="max-width:100px; max-height: 300px;"> 
+            <img src="{{picture_url + item.PictureFileName}}" class="card-img-top" alt="...">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{item.Name}}</h5>
+          <p class="card-text">{{item.Description}}</p>
+          <a href="#" class="btn btn-primary pull-left">Go somewhere</a>
+        </div>
+      </div>
+  </div>
+</div>

@@ -6,10 +6,10 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
-  },
+  }, 
   {
-    path: 'login',
-    component: LoginComponent
+    path: '',
+    loadChildren: () => import('./modules/main-pages/main-pages.module').then(m => m.MainPagesModule)
   }
 ];
 

@@ -1,9 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { LoginRequestModel } from '../models/loginRequest.model';
 import { AuthLoginService } from '../services/auth-login.service';
 import { Observable } from 'rxjs';
+import { ToasterService } from 'src/app/services/toaster.service'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,27 +17,41 @@ export class LoginComponent {
   
   constructor(
     private translate: TranslateService,
-    private authLoginService: AuthLoginService
+    private toast: ToasterService,
+    private authLoginService: AuthLoginService,
+    private router: Router
   ) { 
-    this.IsLoading$ = this.authLoginService.IsLoading$;   
+    this.IsLoading$ =  this.authLoginService.IsLoading$;   
    }
 
 
 
   form: FormGroup = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
+    username: new FormControl('',
+      [
+        Validators.required,
+      ]),
+    password: new FormControl('',
+      [
+        Validators.required,
+      ]
+    ),
+    rememberMe: new FormControl(false)
   });
 
   submit() {
     if (this.form.valid) {
-      var model = new LoginRequestModel(this.form.value.username, this.form.value.password);
-      debugger
-      this.authLoginService.login(model).then((response) => {
-        console.log(response);
+      var model = new LoginRequestModel(this.form.value.username, this.form.value.password); 
+      this.authLoginService.login(model).then((response) => {  
+        if(response.Status !== 200) {
+          this.error = this.translate.instant(`ERROR_CODES.LOGIN.${response.Status}`);
+          return;
+        }
+
+        this.router.navigate(['/']);
       })
     } else {
-      this.error = this.translate.instant('AUTH.FORM_INVALID');
+      this.error = this.translate.instant('AUTH.FORM_ERRORS');
     }
   }
   

@@ -1,6 +1,7 @@
 {
     "GENERAL" : {
-      "HOME" : "Home"
+      "HOME" : "Home",
+      "LOADING" : "Loading..."
     },
     "AUTH":{
        "LOGIN":"Login",
@@ -10,6 +11,15 @@
        "USERNAME":"Username",
        "PASSWORD_REQUIRED":"Password Required",
        "PASSWORD":"Password",
-       "EMAIL":"Email"
+       "EMAIL":"Email",
+       "REMEMBER_ME":"Remember Me",
+       "FORM_ERRORS":"Please correct the errors in the form"
+    },
+    "ERROR_CODES":{
+      "LOGIN":{
+        "200": "Login Successful",
+        "401": "Invalid Username or Password",
+        "404": "Invalid Username or Password"
+      }
     }
 }

@@ -33,7 +33,9 @@
       </form> -->
       <div class="d-flex align-items-center justify-content-around pull-right">
         <div class="m-2">
-          <a class="nav-link" href="#"><i class="fas fa-thin fa-right-to-bracket fa-lg"></i>&nbsp;&nbsp;Login</a>
+          <a *ngIf="!IsLogged" class="nav-link" href="/auth/login"><i class="fas fa-thin fa-right-to-bracket fa-lg"></i>&nbsp;&nbsp;{{'AUTH.LOGIN' | translate}}</a>
+          
+          <a *ngIf="IsLogged" class="nav-link" href="/profile/me"><i class="fas fa-thin fa-user"></i>&nbsp;&nbsp;{{userName}}</a>
         </div> 
         <!-- <div class="m-2">
           <a class="nav-link" href="#"><i class="fas fa-solid fa-right-from-bracket"></i>&nbsp;&nbsp;Logout</a>

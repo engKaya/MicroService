@@ -11,11 +11,12 @@ export class LoginRequestModel {
 
 export class LoginResponseModel {
   constructor() {}
-  userName: string | undefined;
-  token: string | undefined;
-  expiresIn: number | undefined;
-  rights: string[] | undefined;
-  roleId: number | undefined;
-  message: string | undefined;
-  status: HttpStatusCode | undefined;
+  UserName: string | undefined;
+  Token: string | undefined;
+  ExpiresIn: number | undefined;
+  Rights: string[] | undefined;
+  RoleId: number | undefined;
+  Message: string | undefined;
+  Status: HttpStatusCode | undefined;
+  Email: string | undefined;
 }

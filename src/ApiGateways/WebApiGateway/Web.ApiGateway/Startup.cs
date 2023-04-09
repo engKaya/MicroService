@@ -24,10 +24,15 @@ namespace Web.ApiGateway
         {
             services.AddCors(options =>
             {
-                { options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); }
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200")
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod();
+                });
             });
-            services.AddOcelot().AddConsul(); 
-            services.AddControllers();
+            services.AddOcelot().AddConsul();
+            services.AddControllers().AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Web.ApiGateway", Version = "v1" });
@@ -54,7 +59,7 @@ namespace Web.ApiGateway
             {
                 endpoints.MapControllers();
             });
-            app.UseCors("CorsPolicy");
+            app.UseCors();
             app.UseOcelot().GetAwaiter().GetResult();
         }
     }

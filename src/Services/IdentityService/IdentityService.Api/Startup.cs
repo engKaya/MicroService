@@ -1,13 +1,12 @@
+using IdentityService.Api.Core.App.Services;
+using IdentityService.Api.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting; 
-using IdentityService.Api.Extensions;
-using Microsoft.OpenApi.Models;
-using IdentityService.Api.Core.App.Services;
-using System.IO;
-
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models; 
+using Newtonsoft.Json.Serialization;
 namespace IdentityService.Api
 {
     public class Startup
@@ -23,7 +22,7 @@ namespace IdentityService.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IIdentityService, IdentityService.Api.Core.App.Services.IdentityService>();
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IdentityService.Api", Version = "v1" });

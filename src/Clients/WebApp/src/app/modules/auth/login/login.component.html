@@ -18,7 +18,7 @@
       </p>
 
       <p>
-        <mat-form-field>
+        <mat-form-field >
         <mat-label>{{ 'AUTH.PASSWORD' | translate }}</mat-label>
           <input
             type="password"
@@ -30,11 +30,21 @@
         </mat-form-field>
       </p>
  
+      <p>
+        <mat-checkbox class="text-success" formControlName="rememberMe">{{'AUTH.REMEMBER_ME' | translate}}</mat-checkbox>
+      </p>
 
-      <div class="button" style="margin: auto">
-        <button  type="submit" mat-button>{{'AUTH.LOGIN' | translate}}</button>
+      <p>
+        <mat-error *ngIf="error">{{error}}</mat-error>
+      </p>
+
+      <div class="button-row" style="margin: auto"> 
+
+        <button type="submit" class="btn btn-outline-primary pull-right">
+          <span *ngIf="!(IsLoading$ | async)">{{'AUTH.LOGIN' | translate}}</span>
+          <span *ngIf="(IsLoading$ | async)" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;<span *ngIf="(IsLoading$ | async)" [translate]="'GENERAL.LOADING'">Loading...</span>
+        </button>
       </div>
-      {{IsLoading$}}
     </form>
   </mat-card-content>
 </mat-card>

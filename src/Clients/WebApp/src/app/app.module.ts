@@ -8,18 +8,23 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './common-modules/angular-material.module'; 
 import { I18nModule } from './common-modules/i18n.module'; 
+import { MainPagesModule } from './modules/main-pages/main-pages.module';
+import { AuthModule } from './modules/auth/auth.module'; 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent, 
   ],
-  imports: [
+  imports: [ 
+    
     BrowserModule,
     NgbCollapseModule,
     AppRoutingModule, 
     AngularMaterialModule,
     BrowserAnimationsModule,
     I18nModule,
+    MainPagesModule,
+    AuthModule
   ],
   providers: [  
   ],

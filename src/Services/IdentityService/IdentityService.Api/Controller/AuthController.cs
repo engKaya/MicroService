@@ -30,9 +30,9 @@ namespace IdentityService.Api.Controller
             if (response.Status == HttpStatusCode.OK)
                 return Ok(response);
             else if (response.Status == HttpStatusCode.NotFound)
-                return NotFound(response);
+                return Ok(response);
             else if (response.Status == HttpStatusCode.Unauthorized)
-                return Unauthorized(response);
+                return Ok(response);
             else
                 return BadRequest(response);
         }

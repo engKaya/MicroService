@@ -16,6 +16,7 @@ namespace IdentityService.Api.Core.App.Models
         public List<string> Rights { get; set; }
         public int RoleId { get; set; }
         public string Message { get; set; }
+        public string Email { get; set; }
 
         public HttpStatusCode Status { get; set; }
     }

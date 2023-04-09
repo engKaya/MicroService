@@ -63,6 +63,7 @@ namespace IdentityService.Api.Core.App.Services
             var response = new LoginResponseModel
             {
                 UserName = user.UserName,
+                Email= user.Email,
                 Token = encodedToken,
                 ExpiresIn = ExpiresValue, 
                 RoleId = user.Id,
