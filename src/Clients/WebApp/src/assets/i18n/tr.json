@@ -1,0 +1,16 @@
+{
+   "GENERAL" : {
+     "HOME" : "Ana Sayfa"
+   },
+   "AUTH":{
+      "LOGIN":"Giriş Yap",
+      "LOGOUT":"Çıkış Yap",
+      "REGISTER":"Kayıt Ol",
+      "USERNAME":"Kullanıcı Adı",
+      "USERNAME_REQUIRED":"Kullanıcı Adı Gerekli",
+      "PASSWORD":"Şifre",
+      "PASSWORD_REQUIRED":"Şifre Gerekli",
+      "EMAIL":"E-Posta"
+   }
+  
+}

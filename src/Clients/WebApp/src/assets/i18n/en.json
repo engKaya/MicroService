@@ -1,0 +1,15 @@
+{
+    "GENERAL" : {
+      "HOME" : "Home"
+    },
+    "AUTH":{
+       "LOGIN":"Login",
+       "LOGOUT":"Logout",
+       "REGISTER":"Register",
+       "USERNAME_REQUIRED": "Username Required",
+       "USERNAME":"Username",
+       "PASSWORD_REQUIRED":"Password Required",
+       "PASSWORD":"Password",
+       "EMAIL":"Email"
+    }
+}

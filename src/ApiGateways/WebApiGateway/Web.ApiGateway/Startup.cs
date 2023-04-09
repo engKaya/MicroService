@@ -22,6 +22,10 @@ namespace Web.ApiGateway
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                { options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); }
+            });
             services.AddOcelot().AddConsul(); 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -50,7 +54,7 @@ namespace Web.ApiGateway
             {
                 endpoints.MapControllers();
             });
-
+            app.UseCors("CorsPolicy");
             app.UseOcelot().GetAwaiter().GetResult();
         }
     }
