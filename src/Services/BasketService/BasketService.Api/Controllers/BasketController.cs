@@ -66,7 +66,12 @@ namespace BasketService.Api.Controllers
                 basket = new CustomerBasket(identityService.GetUserName());
             }
 
-            basket.Items.Add(item);
+            var existingItem = basket.Items.Find(x => x.ProductId == item.ProductId);
+            if (existingItem != null)
+                existingItem.Quantity += item.Quantity;
+            else
+                basket.Items.Add(item);
+            
             var updatedBasket = await basketRepository.UpdateBasketAsync(basket);
             return Ok(updatedBasket);
         }
@@ -132,7 +137,17 @@ namespace BasketService.Api.Controllers
             return Ok($"{id} basket has been removed!");
         }
 
-        
+        [HttpGet]
+        [Route("GetBasketCount")]
+        [ProducesResponseType(typeof(int), 200)]
+        public async Task<IActionResult> GetBasketCount()
+        {
+            var id = identityService.GetUserName();
+            var basket = await basketRepository.GetBasketAsync(id);
+            return Ok(basket?.Items.Count ?? 0);
+        }
+
+
         private string GetAssemblyName()
         {
             return GetType().Assembly.GetName().Name;

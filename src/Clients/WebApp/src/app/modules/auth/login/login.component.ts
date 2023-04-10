@@ -6,7 +6,7 @@ import { AuthLoginService } from '../services/auth-login.service';
 import { Observable } from 'rxjs';
 import { ToasterService } from 'src/app/services/toaster.service'; 
 import { Router } from '@angular/router';
-
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,14 +14,16 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   IsLoading$: Observable<boolean>; 
-  
+  returnUrl: string = '';
   constructor(
     private translate: TranslateService,
     private toast: ToasterService,
     private authLoginService: AuthLoginService,
-    private router: Router
-  ) { 
+    private router: Router,
+    private route: ActivatedRoute
+    ) { 
     this.IsLoading$ =  this.authLoginService.IsLoading$;   
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
    }
 
 
@@ -48,7 +50,7 @@ export class LoginComponent {
           return;
         }
 
-        this.router.navigate(['/']);
+        this.router.navigate([this.returnUrl.replace("%2F", "/")]);
       })
     } else {
       this.error = this.translate.instant('AUTH.FORM_ERRORS');

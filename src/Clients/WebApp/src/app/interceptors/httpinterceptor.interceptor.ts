@@ -33,9 +33,11 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpErrorResponse,
+  HttpEventType
 } from '@angular/common/http';
-import { Observable } from 'rxjs'; 
+import { Observable, catchError } from 'rxjs'; 
 import { LocalStorageService } from '../services/localstorage.service'
 import { AuthLoginService } from '../modules/auth/services/auth-login.service'
 
@@ -49,12 +51,20 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(this.addAuthToken(request));
-  }
+    return next
+      .handle(this.addAuthToken(request))
+      .pipe(
+        catchError((error: HttpErrorResponse) => { 
+          if (error.status === 401) {
+            this.authService.logout();
+          }
+          throw error;
+        })
+      )
+    }
 
-  addAuthToken(request: HttpRequest<any>) {
-    debugger
-    if  (!this.authService.IsLogged) {
+  addAuthToken(request: HttpRequest<any>) {  
+    if  (!this.authService.isLoggedIn()) {
       return request;
     }
 

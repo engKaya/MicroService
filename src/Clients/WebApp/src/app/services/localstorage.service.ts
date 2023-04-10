@@ -19,7 +19,7 @@ export class LocalStorageService {
         return token === '' ? '' : Buffer.from(token, "base64").toString('binary');
     }
 
-    SetToken(token: string) {
+    SetToken(token: string) { 
         token = Buffer.from(token).toString('base64'); 
         localStorage.setItem('token', token);
     }

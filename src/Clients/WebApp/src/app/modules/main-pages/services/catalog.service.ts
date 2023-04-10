@@ -14,6 +14,7 @@ import { LocalStorageService } from 'src/app/services/localstorage.service';
 import { PaginatedViewModel } from 'src/app/common-objects/PaginatedViewModel.model';
 import { CatalogItem } from '../objects/entities/CatalogItem.model';
 import { BasketItem } from '../objects/models/BasketItem.model';
+import { ToasterService } from 'src/app/services/toaster.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,7 @@ export class CatalogService {
   API_URL = environment.api_gateway;
   constructor(
     private http: HttpClient,
+    private toastr: ToasterService,
     private localStorage: LocalStorageService
   ) {
     this.IsLoadingSubject = new BehaviorSubject<boolean>(false);
@@ -38,32 +40,20 @@ export class CatalogService {
         this.IsLoadingSubject.next(false);
       })
       .catch((error) => {
-        if (environment.isDevMode) this.handleError(error);
-        return error;
-      });
-  }
-
-  addToCart(item: BasketItem) {
-    this.IsLoadingSubject.next(true);
-    let url = `${this.API_URL}basket/AddItem`;
-    return lastValueFrom(this.http.post(url, item))
-      .finally(() => {
-        this.IsLoadingSubject.next(false);
-      })
-      .catch((error) => {
-        if (environment.isDevMode) this.handleError(error);
+        this.handleError(error);
         return error;
       });
   }
 
   handleError(error: any) {
+    if (!environment.isDevMode) return; 
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;
     } else {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    window.alert(errorMessage);
+    this.toastr.openToastError("Error",errorMessage);
     return throwError(() => {
       return errorMessage;
     });

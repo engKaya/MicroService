@@ -5,7 +5,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0"> 
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" [translate]="'GENERAL.HOME'"></a>
         </li>
@@ -26,20 +26,19 @@
         <li class="nav-item">
           <a class="nav-link disabled">Disabled</a>
         </li>
-      </ul>
+      </ul> -->
       <!-- <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form> -->
       <div class="d-flex align-items-center justify-content-around pull-right">
         <div class="m-2">
-          <a *ngIf="!IsLogged" class="nav-link" href="/auth/login"><i class="fas fa-thin fa-right-to-bracket fa-lg"></i>&nbsp;&nbsp;{{'AUTH.LOGIN' | translate}}</a>
-          
+          <a *ngIf="!IsLogged" class="nav-link" href="/auth/login"><i class="fas fa-thin fa-right-to-bracket fa-lg"></i>&nbsp;&nbsp;{{'AUTH.LOGIN' | translate}}</a> 
           <a *ngIf="IsLogged" class="nav-link" href="/profile/me"><i class="fas fa-thin fa-user"></i>&nbsp;&nbsp;{{userName}}</a>
-        </div> 
-        <!-- <div class="m-2">
-          <a class="nav-link" href="#"><i class="fas fa-solid fa-right-from-bracket"></i>&nbsp;&nbsp;Logout</a>
-        </div>  -->
+        </div>  
+        <div class="m-2">
+          <a *ngIf="IsLogged" matBadge="{{cartCount}}" matBadgeColor="warn" [matBadgeHidden]="cartCount==null||cartCount <= 0" matBadgeSize="small" class="nav-link" href="/cart"><i class="fas fa-duotone fa-cart-shopping"></i></a>
+        </div>
       </div>
     </div>
   </div>

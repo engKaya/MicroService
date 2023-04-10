@@ -15,6 +15,7 @@ import {
 } from '../models/loginRequest.model';
 import { environment } from 'src/enviroment/enviroment';
 import { LocalStorageService } from 'src/app/services/localstorage.service';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
@@ -34,7 +35,8 @@ export class AuthLoginService {
 
   constructor(
     private http: HttpClient,
-    private localStorage: LocalStorageService
+    private localStorage: LocalStorageService,
+    private router : Router
   ) {
     this.IsLoadingSubject = new BehaviorSubject<boolean>(false);
     this.IsLoading$ = this.IsLoadingSubject.asObservable(); 
@@ -51,10 +53,10 @@ export class AuthLoginService {
     return lastValueFrom(
       this.http.post<LoginResponseModel>(`${this.apiUrl}auth`, model)
     )
-      .then((response) => {
-        if (response.Status === HttpStatusCode.Ok) { 
-          this.localStorage.SetToken(response.Token as string);
-          this.localStorage.setUsername(response.UserName as string); 
+      .then(async (response) => {
+        if (response.Status === HttpStatusCode.Ok) {  
+          await this.localStorage.SetToken(response.Token as string);
+          await this.localStorage.setUsername(response.UserName as string); 
           this.IsLoggedInSubject.next(true);
           this.UserNameSubject.next(response.UserName as string);
         }
@@ -85,11 +87,9 @@ export class AuthLoginService {
   logout() {
     this.localStorage.RemoveToken();
     this.localStorage.RemoveUsername(); 
+    this.router.navigate(['/login']);
   }
-
-  IsLogged = this.isLoggedIn();
-  userName = this.getUserName();
-
+ 
   isLoggedIn(): boolean { 
     return this.localStorage.GetToken() !== null && this.localStorage.GetToken() !== undefined && this.localStorage.GetToken() !== '';
   }
