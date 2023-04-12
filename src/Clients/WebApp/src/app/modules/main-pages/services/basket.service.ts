@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, lastValueFrom, throwError } from 'rxjs';
 import { environment } from 'src/enviroment/enviroment';
 import { BasketItem } from '../objects/models/BasketItem.model';
 import { ToasterService } from 'src/app/services/toaster.service';
+import { CustomerBasket } from '../objects/entities/CustomerBasket.model';
 
 const API_URL = environment.api_gateway;
 
@@ -31,6 +32,17 @@ export class BasketService {
   getBasketCount(): Promise<number> {
     let url = `${API_URL}basket/GetBasketCount`;
     return lastValueFrom(this.http.get<number>(url)).catch((error) => {
+      this.handleError(error);
+      return error;
+    });
+  }
+
+  getBasketItems(): Promise<CustomerBasket> {
+    let url = `${API_URL}basket/GetBasketItems`;
+    this.IsLoadingSubject.next(true);
+    return lastValueFrom(this.http.get<CustomerBasket>(url)).finally(()=>{
+      this.IsLoadingSubject.next(false);
+    }).catch((error) => {
       this.handleError(error);
       return error;
     });

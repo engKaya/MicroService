@@ -30,8 +30,7 @@ export class DashboardComponent {
 
   ngOnInit() {
     this.catalogService.getItems().then(data => {
-      this.products = data; 
-      console.log(this.products);
+      this.products = data;  
       this.ref.detectChanges();
     });
   }

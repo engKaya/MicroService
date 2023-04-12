@@ -29,6 +29,7 @@ namespace BasketService.Api
         public void ConfigureServices(IServiceCollection services)
         {
             ConfigureServiceExtensions(services);
+            services.AddControllers().AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
