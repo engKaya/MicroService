@@ -51,6 +51,14 @@ namespace BasketService.Api.Controllers
         [ProducesResponseType(typeof(CustomerBasket), 200)]
         public async Task<IActionResult> UpdateBasket([FromBody] CustomerBasket basket)
         {
+
+            foreach (var item in basket.Items)
+            {
+                if (item.Quantity == 0)
+                    basket.Items.Remove(item);
+            }
+
+
             var updatedBasket = await basketRepository.UpdateBasketAsync(basket);
             return Ok(updatedBasket);
         }
@@ -147,6 +155,27 @@ namespace BasketService.Api.Controllers
             return Ok(basket?.Items.Count ?? 0);
         }
 
+        [HttpGet]
+        [Route("delete/{productId:int}")]
+        [ProducesResponseType(typeof(CustomerBasket), 200)]
+        public async Task<IActionResult> RemoveItemFromBasket( int productId)
+        {
+            var id = identityService.GetUserName();
+            var basket = await basketRepository.GetBasketAsync(id);
+            if (basket == null)
+            {
+                return Ok();
+            }
+
+            var item = basket.Items.Find(x => x.ProductId == productId);
+            if (item != null)
+            {
+                basket.Items.Remove(item);
+            }
+
+            var updatedBasket = await basketRepository.UpdateBasketAsync(basket);
+            return Ok(updatedBasket);
+        }
 
         private string GetAssemblyName()
         {

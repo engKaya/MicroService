@@ -75,6 +75,36 @@ export class BasketService {
     });
   }
 
+
+  updateBasket(item: CustomerBasket) {
+    this.IsLoadingSubject.next(true);
+    let url = `${API_URL}basket/update`;
+    return lastValueFrom(this.http.post(url, item))
+      .finally(() => {
+        this.IsLoadingSubject.next(false);
+        this.refreshPage();
+      })
+      .catch((error) => {
+        this.handleError(error);
+        return error;
+      });
+  }
+
+  deleteBasketItem(id: number): Promise<CustomerBasket> { 
+    this.IsLoadingSubject.next(true);
+    let url = `${API_URL}basket/delete/${id}`;
+    return lastValueFrom(this.http.get<CustomerBasket>(url))
+      .finally(() => {
+        this.IsLoadingSubject.next(false);
+        this.refreshPage();
+      })
+      .catch((error) => {
+        this.handleError(error);
+        return error;
+      });
+  }
+
+
   refreshPage() {
     this.refreshPageMessage.next(true);
   }
