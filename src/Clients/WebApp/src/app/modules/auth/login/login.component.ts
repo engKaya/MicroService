@@ -6,11 +6,12 @@ import { AuthLoginService } from '../services/auth-login.service';
 import { Observable } from 'rxjs';
 import { ToasterService } from 'src/app/services/toaster.service'; 
 import { Router } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router'; 
+
+
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: './login.component.html'
 })
 export class LoginComponent {
   IsLoading$: Observable<boolean>; 

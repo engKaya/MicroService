@@ -13,7 +13,7 @@ export class AppComponent {
   ) {
       translate.addLangs(['en', 'tr']);
       translate.setDefaultLang('tr');
-      const browserLang = translate.getBrowserLang() || 'tr';
+      const browserLang = translate.getBrowserLang() || 'tr'; 
       translate.use((browserLang.match(/en|tr/) ? browserLang : 'tr'));
     }
   

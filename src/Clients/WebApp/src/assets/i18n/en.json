@@ -22,5 +22,14 @@
         "401": "Invalid Username or Password",
         "404": "Invalid Username or Password"
       }
-    }
+    },
+  "FORM_VALID": {
+    "REQUIRED": "This field is required",
+    "EMAIL": "Please enter a valid email address",
+    "MINLENGTH": "Please enter at least {{minl}} characters",
+    "MAXLENGTH": "Please enter no more than {{maxl}} characters",
+    "PATTERN": "Please match the requested format",
+    "MIN": "Please enter a value greater than or equal to {min}}",
+    "MAX": "Please enter a value less than or equal to {{max}}"
+  }
 }

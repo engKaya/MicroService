@@ -22,5 +22,15 @@
       "401": "Kullanıcı Adı veya Şifre Hatalı",
       "404": "Kullanıcı Adı veya Şifre Hatalı"
     }
+  },
+  "FORM_VALID": {
+    
+    "REQUIRED": "Bu alan gereklidir",
+    "EMAIL": "Lütfen geçerli bir e-posta adresi girin",
+    "MINLENGTH": "Lütfen en az {{minl}} karakter girin",
+    "MAXLENGTH": "Lütfen en fazla {{maxl}} karakter girin",
+    "PATTERN": "Lütfen geçerli bir değer girin",
+    "MIN": "Lütfen {{min}} veya daha büyük bir değer girin",
+    "MAX": "Lütfen {{max}} veya daha küçük bir değer girin"
   }
 }
