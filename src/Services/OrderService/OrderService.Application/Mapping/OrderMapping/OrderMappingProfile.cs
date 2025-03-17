@@ -3,11 +3,7 @@ using OrderService.Application.DTOs.Order;
 using OrderService.Application.Features.Commands.CreateOrder;
 using OrderService.Application.Features.Queries.ViewModels;
 using OrderService.Domain.AggregateModels.OrderAggregate;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OrderService.Application.Mapping.OrderMapping
 {

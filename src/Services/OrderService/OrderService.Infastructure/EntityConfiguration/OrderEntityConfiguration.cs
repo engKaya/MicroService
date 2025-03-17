@@ -2,11 +2,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OrderService.Domain.AggregateModels.OrderAggregate;
 using OrderService.Infastructure.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OrderService.Infastructure.EntityConfiguration
 {

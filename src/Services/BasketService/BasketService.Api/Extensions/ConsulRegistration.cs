@@ -62,7 +62,6 @@ namespace BasketService.Api.Extensions
             {
                 consulClient.Agent.ServiceDeregister(registration.ID).Wait();
             });
-        }
-
+        } 
     }
 }

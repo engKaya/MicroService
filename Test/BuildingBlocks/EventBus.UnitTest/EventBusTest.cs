@@ -13,13 +13,13 @@ namespace EventBus.UnitTest
 {
     [TestClass]
     public class EventBusTest
-    {
-        private ServiceCollection services;
-        public EventBusTest()
         {
-            services = new ServiceCollection();
-            services.AddLogging(conf => conf.AddConsole());
-        }
+            private ServiceCollection services;
+            public EventBusTest()
+            {
+                services = new ServiceCollection();
+                services.AddLogging(conf => conf.AddConsole());
+            }
         [TestMethod]
         public void subscribe_event_on_azure_test()
         {
@@ -30,7 +30,7 @@ namespace EventBus.UnitTest
                     ConnectionRetry = 5,
                     SubscriberClientAppName = "EventBus.UnitTest",
                     DefaultTopicName = "MicroserviceTopicName",
-                    EventBusType = EventBusType.AzureServiceBus,
+                    EventBusType = EventBusType.Kafka,
                     EventNameSuffix = "IntegrationEvent",
                     EventBusConnectionString = "Endpoint=sb://ibrahimkaya.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=zyciGoPAgP3uoiXYQqKB39esZLp3Yg0i9QqputI8/mA="
                 };
